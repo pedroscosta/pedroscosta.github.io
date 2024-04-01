@@ -10,10 +10,10 @@ export default async function Home() {
       <h2>About me</h2>
       <p>
         My name is Pedro Costa, also known as <i>Hunt</i> or <i>Hunter</i>. I'm a developer from
-        Brazil. I'm in love with programming since I was 14 (I'm{' '}
+        Brazil. I've been in love with programming since I was 14 (I'm{' '}
         {differenceInYears(new Date(), new Date(2000, 6, 22))} now).
         <br />
-        <br />I consider myself as an general developer, I like to develop for the web (full-stack),
+        <br />I consider myself a general developer, I like to develop for the web (full-stack),
         tools, libs, mods, automation, data analytics, ..., it just depends on my mood.
       </p>
       <hr />
