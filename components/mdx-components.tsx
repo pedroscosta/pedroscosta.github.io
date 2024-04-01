@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 
 const components = {
-  Image,
+  Image: (props: ImageProps) => <Image {...props} />,
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn('relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm', className)}
