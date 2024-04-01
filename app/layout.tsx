@@ -2,10 +2,11 @@ import { Analytics } from '@/components/analytics';
 import { ModeToggle } from '@/components/mode-toggle';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
+import Link from '@/components/ui/link';
 import { cn } from '@/lib/utils';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
+import Link_ from 'next/link';
 import './globals.css';
 
 const inter = Inter({
@@ -31,14 +32,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <header>
               <div className="flex items-center justify-between">
                 <Button variant="ghost" asChild className="text-lg font-semibold">
-                  <Link href="/">Pedro Costa</Link>
+                  <Link_ href="/">Pedro Costa</Link_>
                 </Button>
                 <nav className="flex items-center space-x-2 text-sm font-medium">
                   <Button variant="ghost" asChild>
-                    <Link href="/blog">Blog</Link>
+                    <Link_ href="/blog">Blog</Link_>
                   </Button>
                   <Button variant="ghost" asChild className="h-9 w-9 p-1" aria-label="Twitter">
-                    <Link href="https://x.com/pedroscosta_">
+                    <Link_ href="https://x.com/pedroscosta_">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -53,18 +54,26 @@ export default function RootLayout({ children }: RootLayoutProps) {
                       >
                         <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
                       </svg>
-                    </Link>
+                    </Link_>
                   </Button>
                   <Button variant="ghost" asChild className="h-9 w-9 p-1" aria-label="Github">
-                    <Link href="https://github.com/pedroscosta">
+                    <Link_ href="https://github.com/pedroscosta">
                       <GitHubLogoIcon />
-                    </Link>
+                    </Link_>
                   </Button>
                   <ModeToggle />
                 </nav>
               </div>
             </header>
-            <main>{children}</main>
+            <main className="min-h-[75vh]">{children}</main>
+            <footer className="mt-12 flex justify-between">
+              <p>
+                Pedro Costa - <Link href="https://x.com/pedroscosta_">@pedroscosta_</Link>
+              </p>
+              <p>
+                <Link href="https://github.com/pedroscosta/pedroscosta.github.io">source</Link>
+              </p>
+            </footer>
           </div>
           <Analytics />
         </ThemeProvider>
