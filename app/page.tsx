@@ -1,17 +1,10 @@
-import { allPosts } from "@/.contentlayer/generated"
-import Link from "next/link"
-
-export default function Home() {
+export default async function Home() {
   return (
-    <div className="prose dark:prose-invert">
-      {allPosts.map((post) => (
-        <article key={post._id}>
-          <Link href={post.slug}>
-            <h2>{post.title}</h2>
-          </Link>
-          {post.description && <p>{post.description}</p>}
-        </article>
-      ))}
-    </div>
-  )
+    <article className="py-6 prose dark:prose-invert">
+      <h1>Pedro Costa</h1>
+      <p className="text-xl">pedroscosta</p>
+      <hr />
+      <p>Hello</p>
+    </article>
+  );
 }
