@@ -1,6 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
+import Link from '@/components/ui/link';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { differenceInYears } from 'date-fns';
-import Link from 'next/link';
+import Link_ from 'next/link';
 
 export default async function Home() {
   return (
@@ -17,36 +19,42 @@ export default async function Home() {
       <hr />
       <h2>My projects</h2>
       <div className="flex flex-col gap-8">
-        <Link
+        <Link_
           href="https://github.com/pedroscosta/borrowr"
-          className="space-y-4 font-normal no-underline"
+          className="group space-y-4 font-normal no-underline"
         >
           <div className="flex items-center gap-2">
-            <span className="font-semibold underline underline-offset-4">Borrowr</span>
+            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+              borrowr
+            </span>
             <span className="rounded-full bg-blue-400 px-3 py-1 text-sm dark:bg-blue-950">
               experimental
             </span>
           </div>
           <span className="text-muted-foreground">A tool for creating 'code borrowing' CLIs</span>
-        </Link>
-        <Link
+        </Link_>
+        <Link_
           href="https://github.com/pedroscosta/mun"
-          className="space-y-4 font-normal no-underline"
+          className="group space-y-4 font-normal no-underline"
         >
           <div className="flex items-center gap-2">
-            <span className="font-semibold underline underline-offset-4">Mun</span>
+            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+              mun
+            </span>
             <span className="rounded-full bg-purple-400 px-3 py-1 text-sm dark:bg-purple-950">
               proof-of-concept
             </span>
           </div>
           <span className="text-muted-foreground">A statically typed superset of Lua</span>
-        </Link>
-        <Link
+        </Link_>
+        <Link_
           href="https://github.com/pedroscosta/blue-fire"
-          className="space-y-4 font-normal no-underline"
+          className="group space-y-4 font-normal no-underline"
         >
           <div className="flex items-center gap-2">
-            <span className="font-semibold underline underline-offset-4">BlueFire</span>
+            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+              blue-fire
+            </span>
             <span className="rounded-full bg-blue-400 px-3 py-1 text-sm dark:bg-blue-950">
               experimental
             </span>
@@ -57,13 +65,15 @@ export default async function Home() {
           <span className="text-muted-foreground">
             A fully customizable integrated data analytics environment
           </span>
-        </Link>
-        <Link
+        </Link_>
+        <Link_
           href="https://github.com/pedroscosta/react-butterfly-dag"
-          className="space-y-4 font-normal no-underline"
+          className="group space-y-4 font-normal no-underline"
         >
           <div className="flex items-center gap-2">
-            <span className="font-semibold underline underline-offset-4">react-butterfly-dag</span>
+            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+              react-butterfly-dag
+            </span>
             <span className="rounded-full bg-blue-400 px-3 py-1 text-sm dark:bg-blue-950">
               experimental
             </span>
@@ -74,10 +84,10 @@ export default async function Home() {
           <span className="text-muted-foreground">
             A better headless React wrapper for butterfly-dag
           </span>
-        </Link>
+        </Link_>
         <Link
           href="https://github.com/pedroscosta/react-butterfly-dag"
-          className="flex items-center gap-1 space-y-4 font-normal underline-offset-4"
+          className="f flex w-fit items-center gap-1"
         >
           <GitHubLogoIcon /> More minor projects on my GitHub
         </Link>
