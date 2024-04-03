@@ -7,7 +7,7 @@ const Link = ({ className, ...props }: LinkProps) => {
   return (
     <Link_
       className={cn(
-        'mb-[3px] inline-block border-b border-white leading-tight no-underline hover:mb-[2px] hover:border-b-2',
+        'mb-[3px] inline-block border-b border-current leading-tight no-underline hover:mb-[2px] hover:border-b-2',
         className,
       )}
       {...props}
