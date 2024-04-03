@@ -1,10 +1,12 @@
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 
+import { metadata } from '@/app/layout';
+import { size } from '@/app/og/[...slug]/route';
 import { Mdx } from '@/components/mdx-components';
 import { Metadata } from 'next';
 
-interface PostProps {
+export interface PostProps {
   params: {
     slug: string[];
   };
@@ -28,9 +30,39 @@ export async function generateMetadata({ params }: PostProps): Promise<Metadata>
     return {};
   }
 
+  const url = `/blog/${post.slugAsParams}`;
+
   return {
     title: post.title,
     description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      siteName: metadata.title,
+      url,
+      images: [
+        {
+          alt: post.title,
+          type: 'image/png',
+          url: `/og/${url}`,
+          ...size,
+        },
+      ],
+    },
+    twitter: {
+      title: post.title,
+      description: post.description,
+      site: metadata.title,
+      card: 'summary_large_image',
+      images: [
+        {
+          alt: post.title,
+          type: 'image/png',
+          url: `/og/${url}`,
+          ...size,
+        },
+      ],
+    },
   };
 }
 

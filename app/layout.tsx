@@ -4,19 +4,21 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
 import Link from '@/components/ui/link';
 import { cn } from '@/lib/utils';
+import siteConfig from '@/siteConfig';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Inter } from 'next/font/google';
 import Link_ from 'next/link';
 import './globals.css';
 
-const inter = Inter({
+export const fontSans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
 });
 
 export const metadata = {
-  title: 'Pedro Costa',
-  description: "Pedro Costa's blog and site",
+  metadataBase: new URL(`https://${siteConfig.baseUrl}`),
+  title: siteConfig.title,
+  description: siteConfig.description,
 };
 
 interface RootLayoutProps {
@@ -26,7 +28,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={cn('min-h-screen bg-background font-sans antialiased', inter.variable)}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="mx-auto max-w-3xl px-4 py-10">
             <header>
