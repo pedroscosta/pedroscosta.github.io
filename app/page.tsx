@@ -13,8 +13,9 @@ export default async function Home() {
         Brazil. I've been in love with programming since I was 14 (I'm{' '}
         {differenceInYears(new Date(), new Date(2000, 6, 22))} now).
         <br />
-        <br />I consider myself a general developer, I like to develop for the web (full-stack),
-        tools, libs, mods, automation, data analytics, ..., it just depends on my mood.
+        <br />I consider myself a generalist developer, as I like to develop web applications
+        (full-stack), tools, libs, mods, automation solutions, data analytics, and more. It really
+        depends on my mood.
       </p>
       <hr />
       <h2>My projects</h2>
