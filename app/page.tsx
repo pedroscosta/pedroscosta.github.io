@@ -21,6 +21,29 @@ export default async function Home() {
       <h2>My projects</h2>
       <div className="flex flex-col gap-8">
         <Link_
+          href="https://github.com/pedroscosta/resize-kit"
+          className="group space-y-4 font-normal no-underline"
+        >
+          <div className="flex items-center gap-2">
+            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+              resize-kit
+            </span>
+            <span className="rounded-full bg-green-400 px-3 py-1 text-sm dark:bg-green-950">
+              stable
+            </span>
+            <Link_
+              href="https://github.com/pedroscosta/borrowr"
+              className="rounded-full bg-red-400 px-3 py-1 text-sm no-underline dark:bg-red-950"
+            >
+              npm-package
+            </Link_>
+          </div>
+          <span className="text-muted-foreground">
+            A extremely flexible, headless and unopinionated React Hook to create Resizable
+            Components
+          </span>
+        </Link_>
+        <Link_
           href="https://github.com/pedroscosta/borrowr"
           className="group space-y-4 font-normal no-underline"
         >
