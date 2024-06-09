@@ -1,6 +1,6 @@
 import { allPosts } from '@/.contentlayer/generated';
 import Link from '@/components/ui/link';
-import { lightFormat } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export default function Blog() {
   return (
@@ -12,7 +12,7 @@ export default function Blog() {
               <Link href={post.slug}>{post.title}</Link>
             </h2>
             <p className="mb-4 ml-4 text-muted-foreground">
-              {lightFormat(Date.parse(post.date), 'dd/MM/yyyy')}
+              {format(parseISO(post.date.slice(0, -1)), 'dd/MM/yyyy')}
             </p>
           </div>
 

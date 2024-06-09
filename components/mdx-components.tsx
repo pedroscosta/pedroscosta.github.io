@@ -3,6 +3,12 @@ import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image, { ImageProps } from 'next/image';
 
 const components = {
+  h1: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <h1 className="text-3xl font-bold" {...props}></h1>
+  ),
+  p: ({ ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <p className="text-justify" {...props}></p>
+  ),
   Image: (props: ImageProps) => <Image {...props} />,
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code

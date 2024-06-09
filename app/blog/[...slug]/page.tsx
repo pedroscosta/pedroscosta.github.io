@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { metadata } from '@/app/layout';
 import { size } from '@/app/og/[...slug]/route';
 import { Mdx } from '@/components/mdx-components';
+import { format, parseISO } from 'date-fns';
 import { Metadata } from 'next';
 
 export interface PostProps {
@@ -83,8 +84,13 @@ export default async function PostPage({ params }: PostProps) {
     <article className="prose max-w-none py-6 dark:prose-invert">
       <h1 className="mb-2">{post.title}</h1>
       {post.description && (
-        <p className="mt-0 text-xl text-slate-700 dark:text-slate-200">{post.description}</p>
+        <span className="mt-0 flex justify-between text-lg text-slate-600 dark:text-slate-400">
+          {post.description}
+        </span>
       )}
+      <p className="m-0 w-full text-right text-slate-600 dark:text-slate-400">
+        {format(parseISO(post.date.slice(0, -1)), 'dd/MM/yyyy')}
+      </p>
       <hr className="my-4" />
       <Mdx code={post.body.code} />
     </article>
