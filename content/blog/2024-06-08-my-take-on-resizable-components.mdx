@@ -1,0 +1,182 @@
+---
+title: My take on resizable components
+description: An analysis of the problem with resizing libraries for React, a comparison with drag-n-drop ones, and my proposed solution.
+date: '2024-06-08'
+---
+
+It's very common for user interfaces to include some elements that have dynamic position and/or size. Therefore, developers frequently find themselves in the need to implement drag-n-drop (DnD) and resizing. For the DnD part, there are plenty of well-known and popular React libraries, such as dnd-kit, pragmatic-drag-and-drop, and react-dnd. However, seems that the React community left the resizing part aside or, perhaps, just focused on specific uses of resizable components.
+
+I recently found myself in the aforementioned position. I was implementing a component that required significant control of the resizing behavior, and I couldn't find a library that allowed me to do that, without fighting their original behavior — I needed to hack my way around the library's opinion on how the resizing should work.
+
+In the current state of modern Javascript tools, the bar on developer experience is so high that I feel frustrated whenever I have to use something that doesn't give me control over how it works.
+
+With that being said, I've decided to develop a new package to handle resizing. But, before diving into resizing libraries, let's take a look on the other side of the fence, and see how DnD libraries are doing their thing.
+
+# Drag and Drop
+
+I've already tried all the libraries that I will analyze here, some more than others. They all could accomplish the same thing, at least for what I've used before, so the biggest difference is the developer's experience, performance, and accessibility.
+
+## [react-dnd](https://react-dnd.github.io/react-dnd/about)
+
+This was the first DnD library I've had contact, years ago, and the ergonomics of using it haven't changed (to be fair, it's good, so don't take it as a bad thing). It relies on two hooks: 'useDrag' and 'useDrop'. Both expose a reference, which should be attached to the component you want to become draggable or droppable. On top of that, it requires a Context wrapping the draggable component and the drop target. There's also the option to customize some aspects, such as the drag preview.
+
+A basic draggable component should look like this:
+
+```tsx
+const Component = () => {
+  const [{ opacity }, dragRef] = useDrag(
+    () => ({
+      type: ItemTypes.CARD,
+      item: { text },
+      collect: (monitor) => ({
+        opacity: monitor.isDragging() ? 0.5 : 1
+      })
+    }),
+    []
+  );
+
+  return <div ref={dragRef} style={{ opacity }} />;
+}
+```
+
+## [pragmatic-drag-and-drop](https://atlassian.design/components/pragmatic-drag-and-drop/about)
+
+This is Atlassian's second attempt at DnD (the first was react-beautiful-dnd, which I'll not cover in this article) and probably is the library with the better accessibility and the one that better follows *"web standards"*, since some of the authors also created the [drag-and-drop specifications](https://html.spec.whatwg.org/multipage/dnd.html).
+
+Instead of hooks, it follows the direction of imperatively taking control of a component through a function call, with the reference as an argument. This is how it creates both draggable elements and drop targets.
+
+A basic draggable component should look like this:
+
+```tsx
+const Component = () => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    invariant(el);
+
+    return draggable({
+      element: el,
+    });
+  }, []);
+
+  return <div css={imageStyles} ref={ref} />;
+}
+```
+
+## [dnd-kit](https://dndkit.com/)
+
+The way it was designed is very similar to react-dnd‘s, mainly using Hooks and Contexts, but I've experienced a better visual performance from this one, compared to react-dnd, and altering the basic behavior requires less hustle, it simply requires a modifier function. Therefore, currently, dnd-kit is my library of choice.
+
+A basic draggable component should look like this:
+
+```tsx
+const Component = () => {
+  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    id: 'unique-id',
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
+  
+  return <div ref={setNodeRef} style={style} {...listeners} {...attributes} />;
+}
+```
+
+# Resizing
+
+Unlike the DnD libraries, the most common resizing libraries follow the route of providing a wrapper component, and you're only responsible for providing the content. It can be customized through props, which might seem like a reduction in the amount of boilerplate code, but deviating from the original behavior and controlling the state yourself requires even more code than using hooks.
+
+Here is a basic component using [react-resizable](https://github.com/react-grid-layout/react-resizable):
+
+```tsx
+const Component = () => {
+  return (
+    <ResizableBox width={200} height={200} >
+      /* Content */
+    </ResizableBox>
+  );
+}
+```
+
+And here is one using [re-resizable](https://github.com/bokuweb/re-resizable/tree/master):
+
+```tsx
+const Component = () => {
+  return (
+    <Resizable
+      defaultSize={{
+        width: 200
+        height: 200
+      }}
+    >
+      /* Content */
+    </Resizable>
+  );
+}
+```
+
+Those are examples where you don't need access to the state, but this creates a component with very limited resizing abilities. Even dragging from the left or top sides doesn't work as expected out of the box. Trying to control how it snaps, its minimum or maximum size, or the resizing bounds requires some hacking around.
+
+Reimplementing this by myself wasn't hard, but being such a common thing, I would have expected a library to solve it for me. That's why I've created [resize-kit](https://github.com/pedroscosta/resize-kit), a library that focuses on being out of your way, but still being very powerful. That's why I've taken a lot of inspiration from the modifier pattern used in dnd-kit (hence the -kit suffix).
+
+Here's an example of a component using [resize-kit](https://github.com/pedroscosta/resize-kit):
+
+```tsx
+const Component = () => {
+  const { createHandleListeners, transform } = useResizable({});
+
+  return (
+    <div style={{ width: 200 + (transform?.w ?? 0), height: 100 + (transform?.h ?? 0) }}>
+      Resizable div
+      <button style={{ position: absolute, right: 0, bottom: 0 }} {...createHandleListeners('se')} />
+    </div>
+  )
+}
+```
+
+Adding a snap behavior is as simple as passing this argument to the hook:
+
+```tsx
+const Component = () => {
+  const { createHandleListeners, transform } = useResizable({
+    modifiers: [createSnapModifier([25, 25])]
+  });
+
+  return (
+    <div style={{ width: 200 + (transform?.w ?? 0), height: 100 + (transform?.h ?? 0) }}>
+      Resizable div
+      <button style={{ position: absolute, right: 0, bottom: 0 }} {...createHandleListeners('se')} />
+    </div>
+  )
+}
+```
+
+Creating your custom modifier is, again, very straightforward:
+
+```tsx
+const customSnapModifier: Modifier = ({ transform }) => {
+  // Will snap only the width transformation.
+  return {
+    ...transform,
+    w: Math.round(transform.w / 10) * 10,
+  };
+}
+```
+
+More examples [here](https://pedroscosta.github.io/resize-kit/).
+
+# Conclusion
+
+As seen, resizable components, for some unknown reason, have followed a different direction from DnD components, and they could really benefit from following a similar route. Headless and unopinionated components are becoming very popular nowadays because they won't steer you toward the author's style or opinion, and, in my humble opinion, that's the right way.
+
+By all means, I don't consider the aforementioned libraries and their respective authors and contributors to be bad or even inferior in any way. It's actually the contrary, taking your time to develop and maintain a library that other developers depend upon is such a noble activity, and we should all thank them for doing it. It's in the very nature of open source to develop projects that solve common problems differently than what already exists.
+
+If you're interested in using resize-kit, you can get it through npm or the [GitHub repo](https://github.com/pedroscosta/resize-kit):
+
+```shell
+
+pnpm install resize-kit
+
+```
