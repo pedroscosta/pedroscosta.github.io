@@ -38,6 +38,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </Button>
                 <nav className="flex items-center space-x-2 text-sm font-medium">
                   <Button variant="ghost" asChild>
+                    <Link_ href="/components">Components</Link_>
+                  </Button>
+                  <Button variant="ghost" asChild>
                     <Link_ href="/blog">Blog</Link_>
                   </Button>
                   <Button variant="ghost" asChild className="h-9 w-9 p-1" aria-label="Twitter">
