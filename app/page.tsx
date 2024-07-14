@@ -11,7 +11,7 @@ export default async function Home() {
       <p>
         My name is Pedro Costa, also known as <i>Hunt</i> or <i>Hunter</i>. I'm a developer from
         Brazil. I've been in love with programming since I was 14 (I'm{' '}
-        {differenceInYears(new Date(), new Date(2000, 6, 22))} now).
+        {differenceInYears(new Date(), new Date(2000, 5, 22))} now).
         <br />
         <br />I consider myself a generalist developer, as I like to develop web applications
         (full-stack), tools, libs, mods, automation solutions, data analytics, and more. It really
@@ -20,19 +20,21 @@ export default async function Home() {
       <hr />
       <h2>My projects</h2>
       <div className="flex flex-col gap-8">
-        <Link_
-          href="https://github.com/pedroscosta/resize-kit"
-          className="group space-y-4 font-normal no-underline"
-        >
+        <div className="group space-y-4 font-normal no-underline">
           <div className="flex items-center gap-2">
-            <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
-              resize-kit
-            </span>
-            <span className="rounded-full bg-green-400 px-3 py-1 text-sm dark:bg-green-950">
-              stable
-            </span>
             <Link_
-              href="https://github.com/pedroscosta/borrowr"
+              href="https://github.com/pedroscosta/resize-kit"
+              className="flex items-center gap-2 no-underline"
+            >
+              <span className="inline-block border-b border-current font-semibold leading-tight no-underline group-hover:-mb-[1px] group-hover:border-b-2">
+                resize-kit
+              </span>
+              <span className="rounded-full bg-green-400 px-3 py-1 text-sm dark:bg-green-950">
+                stable
+              </span>
+            </Link_>
+            <Link_
+              href="https://www.npmjs.com/package/resize-kit"
               className="rounded-full bg-red-400 px-3 py-1 text-sm no-underline dark:bg-red-950"
             >
               npm-package
@@ -42,7 +44,7 @@ export default async function Home() {
             A extremely flexible, headless and unopinionated React Hook to create Resizable
             Components
           </span>
-        </Link_>
+        </div>
         <Link_
           href="https://github.com/pedroscosta/borrowr"
           className="group space-y-4 font-normal no-underline"
